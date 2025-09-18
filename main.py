@@ -161,6 +161,21 @@ def plot_quantity_hist(df: pd.DataFrame):
     plt.ylabel("Count")
     save_chart(fig, "quantity_distribution.png")
 
+def plot_unit_price_boxplot(df: pd.DataFrame):
+    """Boxplot of unit_price by category (shows median/spread/outliers)."""
+    if not {"category", "unit_price"}.issubset(df.columns):
+        print("Skipping 'unit price boxplot' (required columns not found).")
+        return
+    fig = plt.figure(figsize=(9, 5))
+    ax = plt.gca()
+    df.boxplot(column="unit_price", by="category", grid=False, ax=ax)
+    plt.title("Unit Price by Category (Boxplot)")
+    plt.suptitle("")  # remove pandas' default super title
+    plt.xlabel("Category")
+    plt.ylabel("Unit Price ($)")
+    save_chart(fig, "unit_price_boxplot.png")
+
+
 
 # ------------------ MAIN ------------------
 def main():
@@ -178,6 +193,7 @@ def main():
     plot_revenue_by_category(df)
     plot_monthly_revenue(df)
     plot_quantity_hist(df)
+    plot_unit_price_boxplot(df)
 
     import os
     os.makedirs("charts", exist_ok=True)  # safe if already exists
