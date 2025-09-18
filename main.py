@@ -179,6 +179,11 @@ def main():
     plot_monthly_revenue(df)
     plot_quantity_hist(df)
 
+    import os
+    os.makedirs("charts", exist_ok=True)  # safe if already exists
+    df.to_csv("orders.csv", index=False)
+    print("Saved orders.csv for inspection")
+
     print(f"Charts saved to ./{CHART_DIR}")
 
 
